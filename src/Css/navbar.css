@@ -1,0 +1,29 @@
+.navbar{
+	display: flex;
+	max-width: 1100px;
+	margin: 0 auto;
+	justify-content: space-between;
+	background-color: darkkhaki;
+}
+.navbar p{
+	cursor: pointer;
+	margin-left: 2em;
+}
+
+.navbar_contents{
+	/*flex-grow: 1;*/
+	display: flex;
+	/*justify-content: space-around;*/
+
+
+}
+.navbar_user{
+	display: flex;
+	/*flex-grow: 1;*/
+	/*justify-content: space-around;*/
+}
+
+.selected{
+	/*color: teal;*/
+	display: none;
+}
