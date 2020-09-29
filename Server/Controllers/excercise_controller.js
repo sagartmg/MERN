@@ -16,10 +16,10 @@ module.exports.deletion = (req,res)=>{
 				if(err){
 				console.log(err)
 				}
-				console.log(`successful deletion of ${excercise_name} ok`);
+				console.log(`successful deletion of ${excercise_name}`);
 			})
 		}
-		return res.end(`successful ${excercise_name} no longer exists`);
+		return res.end(`delete successful !! ,${excercise_name} no longer exists`);
 
 
 
