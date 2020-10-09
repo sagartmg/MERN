@@ -53,8 +53,6 @@ function AllExcercise(props) {
 		  };
 
 		  function deleteExcercise(event){
-		  	setCount(count+1);
-		  	// console.log("delete",event.target);
 		  	let excercise_name = event.target.getAttribute("excercise_name")
 		  	// console.log(excercise_name);
 
@@ -63,51 +61,34 @@ function AllExcercise(props) {
 		  	}
 		  	// console.log( "excercise_name_json",excercise_name_json)
 		  	axios.post(`${hostname}/excercises/delete`,excercise_name_json)
-		  		.then((res)=>console.log("deleted data",res.data))
+		  		.then((res)=>{console.log(res.data);
+		  					 setCount(count+1)})
 		  		.catch((error)=>console.log("deleted error",error));
 
-		  	// getExcercise();
 
 		  }
 
-		  console.log("all_excercies",all_excercies);
 		  var mapping;
 
 		  if(all_excercies){
-		  	console.log("mapping");
 		  	 mapping=all_excercies.map(element=>{
 		  	return <div key={element._id}>
 		  			{element.excercise_name}
-{/* 
-		  			<button data="help me" onClick={deleteExcercise}>delete</button>
- */}
 		  			<button excercise_name={`${element.excercise_name}`} onClick={deleteExcercise}>delete</button>
 		  			</div>
 		  })
 
 		  }
-		     {/* 
-                mapping = all_excercies.map(element=>{
-		      	return <div>
-		      			ok
-		      			{element.excercise_name}
-		      			</div>
-		      })
-		
-		     */}
+		     
 		    
 
-		   {/* 
-		    window.addEventListener("DOMContentLoaded",()=>{
-		    	getExcercise();	
-		    });
-		 
-		  */}
+		  
 		  
 		  useEffect(()=>{
 		  	getExcercise();
-		  	console.log("useeffect mounded")
-		  },[count])
+		  	// console.log("useeffect mounded")
+		  },[count]);
+
 		  //to set anohter state that represents the deletion of excercise and pass as sencond parameter to useEffect and it re-renders and so do the 
 		  // child compoentnes. 
 

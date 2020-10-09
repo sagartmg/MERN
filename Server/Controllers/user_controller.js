@@ -8,13 +8,21 @@ exports.signUp = (req,res)=>{
 	let new_user = new User(req.body);
 	const{username} = req.body;
 
-		new_user.save((err,user)=>{
+	User.findOne({username},(err,user)=>{
+		if(user){
+			// return res.status(400).end("username alerady exists")
+			// todo  show the error in client side with != 200 code but with 400 code. 
+			return res.end("username alerady exists")
+		}
+		else{
+			new_user.save((err,user)=>{
 				if(err){
 					 res.status(400).json({
 						err
 					})
 				}
 				else{
+					user.password = undefined;
 					res.json({
 					user
 					})
@@ -23,7 +31,13 @@ exports.signUp = (req,res)=>{
 
 				}
 				
-		})
+			})
+
+		}
+	});
+
+
+		
 
 // when the uniqe field was not addressed in USER MODEL
 {/*    

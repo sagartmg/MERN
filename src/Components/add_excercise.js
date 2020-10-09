@@ -14,6 +14,7 @@ function AddExcercise() {
 				hostname = ""
 			}
 	console.log(hostname,"addExcercise")
+	console.log(process.env)
 
 	const addExcercise = (event) =>{
 		// console.log
