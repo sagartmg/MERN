@@ -6,45 +6,47 @@ import AllExcercise from './all_excercise'
 import '../Css/navbar.css';
 
 function Navbar() {
-	const [all_excercies,setAllExcercise] = useState();
+
+	const[logged_user ,setLoggedUser] = useState(0);
+	let local_logged_user = JSON.parse( window.localStorage.getItem("logged_user"));
+	let local_username;
+	useEffect(()=>{
+		console.log("useEffect executed, chage in logged user")
+		local_logged_user &&  console.log("logged_user",logged_user,"and",local_logged_user.username)
+	},[logged_user])
 
 
-{/* 
+	function signOut(){
+		let hostname;
+			let port = process.env.REACT_APP_PORT || 5000
 
-	 const [count, setCount] = useState(0);
+			if(process.env.REACT_APP_PRODUCTION =="development"){
+				hostname =`http://localhost:${port}`
+			}
+			else{
+				hostname = ""
+			}
 
-  return (
-    <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}> */}
-
-
-
-
-	function addExcercise(event){
-		axios.post('https://localhost:5000/excercises/add',)
-			.then(res=>console.log(res.data));
-	}
-	{/* 
-	function getExcercise(){
-		axios.get('http://localhost:5000/excercises/')
-			.then(res=>{console.log(res.data);
-						const {user} = res.data;
-						console.log("all_excercies_before",all_excercies)
-
-
-						setAllExcercise(user);
-						console.log("user",user)
-						console.log("all_excercies_afger",all_excercies)
+		axios.get(`${hostname}/users/signout`)
+			.then(res=>{console.log(res.data)
+						localStorage.removeItem("logged_user");
+						if(local_logged_user){
+							console.log("out now")
+							setLoggedUser(logged_user+1);
+						}
 						})
-			.catch(error=>console.log(error))
-	} */}
+		}
 
-		{/* 
-		window.addEventListener('DOMContentLoaded', (event) => {
-			getExcercise();
+	  // let data = JSON.parse(window.localStorage.getItem("logged_user"));
+	
 
-		}); */}
+	 //  const newTo = { 
+		//   pathname: "/category/595212758daa6810cbba4104", 
+		//   param1: "Par1" 
+		// };
+				
+
+
 
 
   return (
@@ -69,13 +71,18 @@ function Navbar() {
   		</div>
 
   		<div className="navbar_user">
-  			<Link to='/login'>
+
+  			{!local_logged_user? <div style={{display:"flex"}}><Link to={{ pathname: '/login',  logged_user:logged_user,func:setLoggedUser }}>
 	  			<p>login</p>
-	  		</Link>
+	  		</Link> 
 	  		<Link to='/signup'>
 	  			<p>singup</p>
 	  		</Link>
-  			
+	  		</div>: <div style={{display:"flex"}}><p>{local_logged_user.username}</p>
+	  		
+	  		<p onClick={signOut}>sign out</p></div>
+	  	}
+
   		</div>
   		
 

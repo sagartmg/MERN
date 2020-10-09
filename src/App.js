@@ -11,6 +11,7 @@ import Signup from './Components/signup'
 
 import './Css/styles.css'
 function App() {
+    const[username,setUsername] = useState(); 
   {/* 
   const [all_excercies,setAllExcercise] = useState();
 

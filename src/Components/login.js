@@ -1,7 +1,11 @@
 import React,{useEffect} from 'react';
 import axios from 'axios'
 import '../Css/all_excercise.css'
-function Login() {
+function Login(props) {
+	console.log("loginprops",props)
+	let setLoggedUser = props.location.func;
+	let logged_user = props.location.logged_user;
+	console.log("setLoggedUser",setLoggedUser)
 
 	let hostname;
 	let PORT = process.env.REACT_APP_PORT || 5000;
@@ -15,6 +19,7 @@ function Login() {
 	console.log(hostname)
 
 
+
 	function login(event){
 		// alert("logged in")
 		event.preventDefault();
@@ -25,16 +30,21 @@ function Login() {
 		}
 		// console.log(user);
 		axios.post(`${hostname}/users/signin`,user)
-			.then(res=>console.log("res",res.data))
+			.then(res=>{console.log("res",res.data)
+					window.localStorage.setItem("logged_user",JSON.stringify(user));
+					setLoggedUser(logged_user+1);
+			})
 			.catch(error=>console.log("err",error))
 
 
+		
 
-// todo axios for loggin in . 
+
 		event.target.reset();
 
-		// check if the username is vlaid. 
 	}
+
+	
 
 
 
