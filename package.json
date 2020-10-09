@@ -9,14 +9,20 @@
     "axios": "^0.20.0",
     "concurrency": "^0.1.4",
     "concurrently": "^5.3.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.8",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3"
   },
   "scripts": {
-    "server": "cd Server && npm start",
-    "start": "concurrently \"react-scripts start\" \"npm run server\" ",
+    "react": "react-scripts start",
+    "start": "nodemon server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -3,6 +3,18 @@ import '../Css/all_excercise.css'
 import axios from "axios"
 function AddExcercise() {
 
+
+	 let hostname;
+			let port = process.env.REACT_APP_PORT || 5000
+
+			if(process.env.REACT_APP_PRODUCTION =="development"){
+				hostname =`http://localhost:${port}`
+			}
+			else{
+				hostname = ""
+			}
+	console.log(hostname,"addExcercise")
+
 	const addExcercise = (event) =>{
 		// console.log
 		event.preventDefault();
@@ -11,7 +23,7 @@ function AddExcercise() {
 			category: event.target.category.value
 		}
 
-		axios.post("http://localhost:5000/excercises/add",new_excercise)
+		axios.post(`${hostname}/excercises/add`,new_excercise)
 			.then(res=>{
 				console.log(res.data)
 			})

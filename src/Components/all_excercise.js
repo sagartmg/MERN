@@ -18,13 +18,24 @@ function AllExcercise(props) {
 		    })
 		}
 		 */}
+		  let hostname;
+			let port = process.env.REACT_APP_PORT || 5000
+
+			if(process.env.REACT_APP_PRODUCTION =="development"){
+				hostname =`http://localhost:${port}`
+			}
+			else{
+				hostname = ""
+			}
+			// console.log(hostname)
+			// console.log(process.env)
 
 		 const [all_excercies,setAllExcercise] = useState();
 		 const [count, setCount ] = useState(0);
 
 		  function getExcercise(){
 		  	// console.log("geyt")
-		    axios.get('http://localhost:5000/excercises/')
+		    axios.get(`${hostname}/excercises/`)
 		      .then(res=>{
 		            const {user} = res.data;
 		            // console.log("all_excercies_before",all_excercies)
@@ -51,7 +62,7 @@ function AllExcercise(props) {
 		  		"excercise_name":excercise_name
 		  	}
 		  	// console.log( "excercise_name_json",excercise_name_json)
-		  	axios.post("http://localhost:5000/excercises/delete",excercise_name_json)
+		  	axios.post(`${hostname}/excercises/delete`,excercise_name_json)
 		  		.then((res)=>console.log("deleted data",res.data))
 		  		.catch((error)=>console.log("deleted error",error));
 
