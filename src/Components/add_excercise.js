@@ -22,7 +22,7 @@ function AddExcercise() {
 		const new_excercise = {
 			excercise_name:event.target.name.value,
 			category: event.target.category.value,
-			username: JSON.parse( window.localStorage.getItem("logged_user")).username
+			username: JSON.parse( window.localStorage.getItem("logged_user"))?.username
 		}
 
 		axios.post(`${hostname}/excercises/add`,new_excercise)
