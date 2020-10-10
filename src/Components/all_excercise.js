@@ -5,19 +5,18 @@ import '../Css/all_excercise.css'
 
 
 function AllExcercise(props) {
-		{/* 
-		console.log("match.params",props)
-		const {state} = props;
-		console.log(state);
+	console.log("props",props)
+	let logged_user = JSON.parse( window.localStorage.getItem("logged_user"));
+	let logged_user_from_navbar = props.location.logged_user;
+	
 
-		if(state){
-			var mapping =state.map(element=>{
-			return <div key={element._id}>
-				<p>{element.excercise_name}</p>
-			</div>
-		    })
-		}
-		 */}
+	console.log(logged_user_from_navbar)
+
+
+	let local_user = logged_user?.username;
+	// alert(local_user)
+	// or rather from window.usernmaem...
+		
 		  let hostname;
 			let port = process.env.REACT_APP_PORT || 5000
 
@@ -35,17 +34,31 @@ function AllExcercise(props) {
 
 		  function getExcercise(){
 		  	// console.log("geyt")
-		    axios.get(`${hostname}/excercises/`)
+		  	// {local_user? alert("preseent"):alert("not")}
+
+		  	if(local_user && props.location.pathname=="/myexcercises"){
+		  		axios.post(`${hostname}/excercises/${local_user}`,logged_user)
+		  			.then(res=>{console.log(res.data)
+		  						const{ excercise} = res.data;
+		  						setAllExcercise(excercise);
+		  						});
+
+		  	}
+		  	else{
+		  		axios.get(`${hostname}/excercises/`)
 		      .then(res=>{
-		            const {user} = res.data;
+		            const {excercise} = res.data;
 		            // console.log("all_excercies_before",all_excercies)
 		            // alert(user);
 
-		            setAllExcercise(user);
+		            setAllExcercise(excercise);
 		            // console.log("user",user)
 		            // console.log("all_excercies_afger",all_excercies)
 		            })
 		      .catch(error=>console.log("an erro has occured"))
+
+		  	}
+		    
 
 
 
@@ -72,9 +85,9 @@ function AllExcercise(props) {
 
 		  if(all_excercies){
 		  	 mapping=all_excercies.map(element=>{
-		  	return <div key={element._id}>
-		  			{element.excercise_name}
-		  			<button excercise_name={`${element.excercise_name}`} onClick={deleteExcercise}>delete</button>
+		  	return <div key={element._id} className="each_excercises">
+		  			<div className="each_excercises_name">{element.excercise_name}</div>
+		  			{element.username==local_user &&<div className="delete"><button excercise_name={`${element.excercise_name}`} onClick={deleteExcercise}>delete</button></div>}
 		  			</div>
 		  })
 
@@ -86,8 +99,8 @@ function AllExcercise(props) {
 		  
 		  useEffect(()=>{
 		  	getExcercise();
-		  	// console.log("useeffect mounded")
-		  },[count]);
+		  	console.log("useeffect mounded")
+		  },[count,props.location.pathname,props.location]);
 
 		  //to set anohter state that represents the deletion of excercise and pass as sencond parameter to useEffect and it re-renders and so do the 
 		  // child compoentnes. 
@@ -101,7 +114,6 @@ function AllExcercise(props) {
 
   return (
    <>
-  	<p>all excercise</p>
   	{mapping? mapping:null}
 
    </>

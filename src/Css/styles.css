@@ -2,5 +2,9 @@
 	margin:0;
 	padding: 0;
 	box-sizing: border-box;
-	border:1px solid teal;
+	/*border:1px solid teal;*/
+}
+.add_excercise,.new_login,.new_signup{
+	max-width: 1000px;
+	margin: 0 auto;
 }

@@ -21,7 +21,8 @@ function AddExcercise() {
 		event.preventDefault();
 		const new_excercise = {
 			excercise_name:event.target.name.value,
-			category: event.target.category.value
+			category: event.target.category.value,
+			username: JSON.parse( window.localStorage.getItem("logged_user")).username
 		}
 
 		axios.post(`${hostname}/excercises/add`,new_excercise)
@@ -39,8 +40,7 @@ function AddExcercise() {
 
   return (
    <>
-  	<p>add excercise</p>
-  	<form onSubmit={addExcercise}>
+  	<form onSubmit={addExcercise} className="add_excercise">
   		<input type="text" placeholder="excercise" name="name" />
   		<input type="text" placeholder="category" name="category"/>
   		<input type="submit" value="add excercise"/>

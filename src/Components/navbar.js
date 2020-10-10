@@ -10,6 +10,7 @@ function Navbar() {
 	const[logged_user ,setLoggedUser] = useState(0);
 	let local_logged_user = JSON.parse( window.localStorage.getItem("logged_user"));
 	let local_username;
+
 	useEffect(()=>{
 		console.log("useEffect executed, chage in logged user")
 		local_logged_user &&  console.log("logged_user",logged_user,"and",local_logged_user.username)
@@ -33,6 +34,7 @@ function Navbar() {
 						if(local_logged_user){
 							console.log("out now")
 							setLoggedUser(logged_user+1);
+							 window.location.href = "/login";
 						}
 						})
 		}
@@ -60,9 +62,10 @@ function Navbar() {
   		<Link to={{pathname:'/',state:{all_excercies}}} style={{ textDecoration: 'none'}}>
 	  		<p onClick={getExcercise}>All Excercise</p>
 	  	</Link> */}
-	  	<Link to='/'>
+	  	<Link to={{ pathname: '/',  logged_user:logged_user}}>
 	  		<p>All Excercise</p>
 	  	</Link>
+	  	{local_logged_user && <Link to="/myexcercises"><p>My Excercises </p></Link>}
 
 	  	<Link to='/add_excercise'>
 	  		<p>Add Excercise</p>
@@ -72,11 +75,11 @@ function Navbar() {
 
   		<div className="navbar_user">
 
-  			{!local_logged_user? <div style={{display:"flex"}}><Link to={{ pathname: '/login',  logged_user:logged_user,func:setLoggedUser }}>
+			{!local_logged_user? <div style={{display:"flex"}}><Link to={{ pathname: '/login',  logged_user:logged_user,func:setLoggedUser }}>
 	  			<p>login</p>
 	  		</Link> 
 	  		<Link to='/signup'>
-	  			<p>singup</p>
+	  			<p>signup</p>
 	  		</Link>
 	  		</div>: <div style={{display:"flex"}}><p>{local_logged_user.username}</p>
 	  		

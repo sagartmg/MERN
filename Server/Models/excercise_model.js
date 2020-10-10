@@ -10,7 +10,10 @@ const excerciseSchema = mongoose.Schema({
 		type:String,
 		// required:true,
 
-	}
+	},
+	username:{
+		type:String,
+	},
 
 },{timestamps:true});
 

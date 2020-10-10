@@ -1,4 +1,5 @@
 import React,{useEffect} from 'react';
+import {Route,Link} from 'react-router-dom'
 import axios from 'axios'
 import '../Css/all_excercise.css'
 function Login(props) {
@@ -33,6 +34,7 @@ function Login(props) {
 			.then(res=>{console.log("res",res.data)
 					window.localStorage.setItem("logged_user",JSON.stringify(user));
 					setLoggedUser(logged_user+1);
+					window.location.href = "/";
 			})
 			.catch(error=>console.log("err",error))
 
@@ -43,6 +45,10 @@ function Login(props) {
 		event.target.reset();
 
 	}
+	useEffect(()=>{
+		console.log("useEFfect in loginpage")
+
+	},[logged_user])
 
 	
 
@@ -53,7 +59,7 @@ function Login(props) {
 
   return (
    <>
-  	<form onSubmit={login}>
+  	<form onSubmit={login} className="new_login">
   	<input type="text" name="username" placeholder = "username"/>
   	<input type="password" name="password" placeholder="password"/>
   	<input type="submit" value="login" />

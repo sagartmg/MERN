@@ -1,0 +1,26 @@
+
+
+.each_excercises{
+	border-bottom: 1px solid black;
+	max-width: 800px;
+	margin: 0 auto;
+	align-items: center;
+
+}
+
+.each_excercises{
+	align-items: center;
+	display: flex;
+	justify-content:space-between;
+}
+
+.each_excercises_name{
+	/*flex: 1;*/
+
+
+}
+.delete{
+	/*flex: 1;*/
+	margin-right: 1em;
+
+}

@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from 'react';
 import axios from 'axios'
 import Navbar from './Components/navbar'
-import {Route,Switch} from 'react-router-dom'
+import {Route,Switch,Redirect} from 'react-router-dom'
 import AllExcercise from './Components/all_excercise'
 import AddExcercise from './Components/add_excercise'
 import Login from './Components/login'
@@ -54,9 +54,12 @@ function App() {
    <Switch>
 
    <Route exact path="/" component={AllExcercise}/>
+   <Route exact path="/myexcercises" component={AllExcercise}/>
+
    <Route exact path="/add_excercise" component={AddExcercise}/>
    <Route exact path="/login" component={Login}/>
    <Route exact path="/signup" component={Signup}/>
+   <Redirect to="/" />
 
 
 

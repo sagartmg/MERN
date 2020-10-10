@@ -35,8 +35,7 @@ function Signup() {
 
   return (
    <>
-  	<p>all signup</p>
-  	<form onSubmit={createUser}>
+  	<form onSubmit={createUser} className="new_signup">
   		<input type="text" placeholder="username" name="username"/>
   		<input type="password" placeholder="password" name="password"/>
   		<input type="submit" value = "sign up"/>

@@ -15,19 +15,41 @@ excerciseRouter.post('/add',addition)
 excerciseRouter.post('/delete',deletion);
 
 excerciseRouter.get('/',(req,res)=>{
-	Excercise.find({},(err,user)=>{
-		if(err || !user){
+	Excercise.find({},(err,excercise)=>{
+		if(err || !excercise){
 			return res.status(400).json({
 				err
 			})
 		}
 		return res.json({
-			user
+			excercise
 		})
 	})
 
 
 });
+
+
+excerciseRouter.post('/:users',(req,res)=>{
+	const {username} = req.body
+	Excercise.find({username},(err,excercise)=>{
+		if(err || !excercise){
+			return res.status(400).json({
+				err
+			})
+		}
+		return res.json({
+			excercise
+		})
+		
+
+
+	})
+
+
+});
+
+
 
 
 // exports.router;
