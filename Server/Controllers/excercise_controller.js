@@ -37,10 +37,7 @@ module.exports.addition = (req,res)=>{
 
 	new_excercise.save((err,user)=>{
 		if(err){
-			return res.status(400).json({
-				err1:err,
-				err:"same name"
-			})
+			return res.status(400).send("same name excercise already")
 		}
 		return res.json({
 			user
