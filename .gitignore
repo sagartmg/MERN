@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/react-node-ecommerce
 /.pnp
 .pnp.js
 

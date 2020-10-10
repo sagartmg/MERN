@@ -6,6 +6,11 @@ const cors = require('cors');
 
 const user_router = require('./Routes/user_route');
 
+const morgan = require('morgan');
+const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
+const expressValidator = require('express-validator');
+
 
 
 const app = express();
@@ -16,6 +21,8 @@ const port = process.env.port || 5000;
  */}
 
 //db
+//  DATABASE = mongodb://localhost/ecommerce  this will create an ecommerce database in our mongodb
+
 mongoose.connect(process.env.DATABASE,{
 	useNewUrlParser: true,
     useCreateIndex:true,
@@ -33,8 +40,24 @@ mongoose.connect(process.env.DATABASE,{
  }) 
 */}
 
+
+//middleware
  app.use(cors()) 
 app.use(express.json());
+app.use(morgan('dev'))  // 'dev' flag..what is this??
+app.use(cookieParser())
+app.use(expressValidator())
+
+{/* 
+	app.use(bodyParser.json())  // no needd
+ */}
+
+
+
+//routes middleware
+app.use('/users',user_router);
+
+
 
 		
 {/* 
@@ -50,9 +73,8 @@ app.use((req, res, next) => {
 		app.get('/',(req,res,next)=>{
 			res.end("will send ishes to you !!");
 		}); */}
-		//routes middleware
-		app.use('/user',user_router);
-		
+
+
 
 
 {/* 

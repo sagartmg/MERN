@@ -1,9 +1,11 @@
 const mongoose  = require('mongoose');
 
+
 const crypto = require('crypto') 
  //crypto:  secret credentials to passed as http request.
-const uuidv1  = require('uuid/v1'
+const uuidv1  = require('uuidv1'); // uuid/v1
 	//uuid  to generate unique strings(s)
+	// console.log("uuidv1",uuidv1());
 
 const userSchema = new mongoose.Schema({
 	name:{
@@ -24,7 +26,7 @@ const userSchema = new mongoose.Schema({
 	},
 	about:{
 		type:String,
-		require:true,
+		trim:true,
 
 	},
 	salt:String,// this will be used to store/generate hash passwrodl..
@@ -46,7 +48,7 @@ const userSchema = new mongoose.Schema({
 userSchema.virtual('password')
 	.set(function(password){
 		this._password = password;
-		this.salt = uuidv1();
+		this.salt = uuidv1();//uuid()  //but the function doesnot defined. 
 		this.hashed_password = this.encryptPassword(password)
 	} )
 	.get( function(){
@@ -56,6 +58,9 @@ userSchema.virtual('password')
 // creating functions in  mongoose userSchema
 
 userSchema.methods ={
+	authenticate: function(password_text){
+		return this.hashed_password === this.encryptPassword(password_text);
+	},
 	encryptPassword:function(password){
 		if(!password) return '';
 		try{
