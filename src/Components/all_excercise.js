@@ -87,7 +87,7 @@ function AllExcercise(props) {
 		  	 mapping=all_excercies.map(element=>{
 		  	return <div key={element._id} className="each_excercises">
 		  			<div className="each_excercises_name">{element.excercise_name}</div>
-		  			{element.username==local_user &&<div className="delete"><button excercise_name={`${element.excercise_name}`} onClick={deleteExcercise}>delete</button></div>}
+		  			{(element.username==local_user || !element.username) &&<div className="delete"><button excercise_name={`${element.excercise_name}`} onClick={deleteExcercise}>delete</button></div>}
 		  			</div>
 		  })
 
