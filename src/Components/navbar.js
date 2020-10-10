@@ -34,7 +34,7 @@ function Navbar() {
 						if(local_logged_user){
 							console.log("out now")
 							setLoggedUser(logged_user+1);
-							 window.location.href = "/login";
+							 window.location.href = "/";
 						}
 						})
 		}
