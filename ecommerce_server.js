@@ -60,6 +60,29 @@ app.use(expressValidator())
 app.use('/users',user_auth_router);
 app.use("/users",user_router);
 
+const User = require("./Backend/Model/user_model")
+
+app.use("/update",(req,res)=>{
+	console.log(req.body._id)
+	 User.updateOne({_id:req.body._id},{role:1},(err,user)=>{
+		if(err || !user){
+			return res.status(400).json({
+				err
+			})
+		}
+		res.json({
+			user
+		})
+	})
+	// User.find({},(err,user)=>{
+	// 	res.json({
+	// 		user
+	// 	})
+	// })
+
+
+})
+
 
 
 		

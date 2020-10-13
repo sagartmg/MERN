@@ -12,9 +12,6 @@ const {errorHandler} = require("../Helper/db_error_helper")
 const {showError} = require("../Helper/db_error_helper")
 
 
-exports.sayHi = (req,res)=>{
-	res.json({message:"hello people"});
-};
 
 exports.signin =(req,res)=>{
 
@@ -44,7 +41,6 @@ exports.signin =(req,res)=>{
 
 
 exports.signup =(req,res)=>{
-	// console.log("req.body",req.body);
 // create new user
 	const user = new User(req.body);
 	// save to mongodb atlas with a callback function
@@ -60,14 +56,48 @@ exports.signup =(req,res)=>{
 };
 
 
-// to restrict certain routes
+// to restrict certain routes  // just like face book, if login in can view profiles.
 exports.requireSignin = expressJwt({ 
 	secret: process.env.JWT_SECRET,
-	userProperty:"auth",
+	userProperty:"auth",  // saving user data in this auth property??
 	algorithms: ['HS256']
 	})
 
 // try if not working ['HS256']
 // RS256
+
+
+
+
+
+//  not able to see others profile 
+exports.isAuth = (req,res,next) =>{
+	console.log("req.auth",req.auth);  // { _id: '5f81a3a3526df026602bcb24', iat: 1602512470 }  //iat=>issued at
+										// while creating token we had passed the id. 
+
+	let user = req.profile && req.auth && req.profile._id == req.auth._id;
+
+	if(!user){
+		return res.status(403).json({
+			error: "access denied, id and token not of same user"
+		})
+	}
+	next();
+}
+
+
+exports. isAdmin = (req,res,next) =>{
+
+	if(req.profile.role == 0){
+		res.status(403).json({
+			error:"only for admin"
+		})
+	}
+	next();
+}
+
+
+
+
 
 
