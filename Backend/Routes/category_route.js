@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 
-const {create} = require("../Controller/category_controller")
+const {create,categoryById,read,update,remove,all} = require("../Controller/category_controller")
 const {userById} = require("../Controller/user_controller");
 const {requireSignin,isAuth,isAdmin} = require("../Controller/user_auth_controller");
 
@@ -12,10 +12,15 @@ const {requireSignin,isAuth,isAdmin} = require("../Controller/user_auth_controll
 
 //only admin can create a new category
 router.post("/create/:userId",requireSignin,isAuth,isAdmin,create);
+router.get("/read/:categoryId",read);
+router.get("/all",all)
+
+router.put("/update/:categoryId/:userId",requireSignin,isAuth,isAdmin,update)
+router.delete("/remove/:categoryId/:userId",requireSignin,isAuth,isAdmin,remove)
 
 
 
-
+router.param("categoryId",categoryById)
 router.param("userId",userById);
 
 
