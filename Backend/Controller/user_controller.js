@@ -3,9 +3,10 @@ const User = require("../Model/user_model");
 
 exports.userById= (req,res,next,id,fuck)=>{  // id comming from route parameter
 	User.findById(id).exec((err,user)=>{
-		// console.log("id",id)
-		console.log("any",id); // gets id after :
-		console.log("fuck",fuck); // userId-string
+
+		
+		// console.log("any",id); // gets id after :
+		// console.log("fuck",fuck); // userId-string
 
 		if(err || !user){
 			return res.status(400).json({

@@ -6,6 +6,10 @@ const cors = require('cors');
 
 const user_auth_router = require('./Backend/Routes/user_auth_route');
 const user_router = require('./Backend/Routes/user_route');
+const category_router = require('./Backend/Routes/category_route');
+const product_router = require('./Backend/Routes/product_route');
+
+
 
 
 const morgan = require('morgan');
@@ -59,6 +63,9 @@ app.use(expressValidator())
 //routes middleware
 app.use('/users',user_auth_router);
 app.use("/users",user_router);
+app.use("/category",category_router)
+app.use("/product",product_router)
+
 
 const User = require("./Backend/Model/user_model")
 

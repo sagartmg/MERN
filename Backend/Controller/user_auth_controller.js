@@ -72,6 +72,7 @@ exports.requireSignin = expressJwt({
 
 //  not able to see others profile 
 exports.isAuth = (req,res,next) =>{
+	// console.log("req.profile",req.profile)  // the user that mathces the id
 	console.log("req.auth",req.auth);  // { _id: '5f81a3a3526df026602bcb24', iat: 1602512470 }  //iat=>issued at
 										// while creating token we had passed the id. 
 
