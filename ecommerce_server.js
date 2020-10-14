@@ -3,6 +3,7 @@ const mongoose= require('mongoose');
 require('dotenv').config();
 const router = require('express').Router();
 const cors = require('cors');
+const path = require("path");
 
 const user_auth_router = require('./Backend/Routes/user_auth_route');
 const user_router = require('./Backend/Routes/user_route');
@@ -154,10 +155,19 @@ app.post('/add',(req,res,next)=>{
 			 	.catch((err)=>res.status(400).json("error happended"+err));
 
 		}); */}
+app.use("/path",(req,res)=>{
+  res.end(`path resolve is response from server at  ${path.resolve(__dirname, "dirname")}`)
+})
 
+//no build locally
+app.use(express.static(path.join(__dirname,'build')))
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname,'build'))
+})
 	
 
-app.listen(port,(res)=>{
+app.listen(port,"0.0.0.0",(res)=>{
 	console.log(`server started at port ${port}`);
 
 })
