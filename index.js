@@ -3,10 +3,7 @@ var app = express();
 
 require('dotenv').config();
   
-// in .env file  
-// REACT_APP_PORT = 4001
-// REACT_APP_PRODUCTION = development
-// PORT = 4001  // in server file 
+
 
 var PORT = process.env.PORT || 5000
 const path = require("path")
@@ -28,29 +25,29 @@ app.use(expressValidator())
 
 const secondRouter = require("./Routes/second_route");
 
-const user_auth_router = require('./Backend/Routes/user_auth_route');
-const user_router = require('./Backend/Routes/user_route');
-const category_router = require('./Backend/Routes/category_route');
-const product_router = require('./Backend/Routes/product_route');
+// const user_auth_router = require('./Backend/Routes/user_auth_route');
+// const user_router = require('./Backend/Routes/user_route');
+// const category_router = require('./Backend/Routes/category_route');
+// const product_router = require('./Backend/Routes/product_route');
 
 
-let DATABASE
-if(process.env.NODE_ENV==="development"){
-	DATABASE = process.env.DATABASE;
+// let DATABASE
+// if(process.env.NODE_ENV==="development"){
+// 	DATABASE = process.env.DATABASE;
 
-}
-else{
-	DATABASE = process.env.MONGO_ATLAS
-}
-
-
-mongoose.connect(process.env.DATABASE,{
-	useNewUrlParser: true,
-    useCreateIndex:true,
-   useUnifiedTopology: true
+// }
+// else{
+// 	DATABASE = process.env.MONGO_ATLAS
+// }
 
 
-}).then(()=>console.log('connected to MONGODB'))
+// mongoose.connect(process.env.DATABASE,{
+// 	useNewUrlParser: true,
+//     useCreateIndex:true,
+//    useUnifiedTopology: true
+
+
+// }).then(()=>console.log('connected to MONGODB'))
 
 
 
@@ -58,6 +55,10 @@ app.use("/path",(req,res)=>{
   res.end(`path resolve is response from server ${path.resolve(__dirname, '../build')}`)
 })
 
+// app.use('/users',user_auth_router);
+// app.use("/users",user_router);
+// app.use("/category",category_router)
+// app.use("/product",product_router)
 
 
 app.use("/first",(req,res)=>{
