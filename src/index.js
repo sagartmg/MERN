@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
-import UserSignUp from './Components/user_signup'
+import LandingPage from './landing_page'
 
 ReactDOM.render(
   <React.StrictMode>
-    <UserSignUp />
+    <LandingPage/>
   </React.StrictMode>,
   document.getElementById('root')
 );

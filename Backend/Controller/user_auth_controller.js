@@ -20,18 +20,17 @@ exports.signin =(req,res)=>{
 	User.findOne({name},(err,user)=>{
 		if(err || !user ){
 			return res.status(400).json({
-				err:"no such username"
+				error:"no such username"
 			})
 		}
 		if(!user.authenticate(password)){
 			return res.status(400).json({
-				err:"sorry password no match"
+				error:"sorry password no match"
 			})
 		}
 		const secret = process.env.JWT_SECRET;
 		const token = jwt.sign({_id:user._id},secret)
 		res.cookie('t',token,{expire:new Date()+ 9999});
-		const {_id, name} = user;
 		res.json({token,user});
 
 	})
