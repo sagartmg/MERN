@@ -8,7 +8,25 @@ const {signup,signin,requireSignin} = require('../Controller/user_auth_controlle
 router.get('/',(req,res)=>{
 	res.json({"ok":"you will get it"})
 })
-router.post('/signup',signup)
+router.post('/signup',(req,res,next)=>{
+	const{name,email,password} = req.body;
+	if(!email.includes("@")){
+		res.status(400).json({
+			error:"email must contain @"
+		})
+	}
+	if(password.length<8){
+		res.status(400).json({
+			error:"password must be atleast 8 characters"
+		})
+	}
+	if(!/\d/.test(password)){
+		res.status(400).json({
+			error:"password must contain a number"
+		})
+	}
+	next()
+},signup)
 
 router.post("/signin",signin)
 

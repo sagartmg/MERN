@@ -47,7 +47,7 @@ exports.signup =(req,res)=>{
 	user.save((err,user)=>{
 		if(err){
 			return res.status(400).json({
-				err:showError(err),
+				error:showError(err),
 			});
 		}
 		res.json({user});

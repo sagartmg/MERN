@@ -36,13 +36,27 @@ function UserSignUp() {
       password:values.password
     }
     axios.post(`${hostname}/users/signup`,new_user)
-      .then(res=>console.log(res.data));
-    e.target.reset();
-    setValues({
-    name:'',
-    email:"",
-    password:''
-    })
+      .then(res=>console.log("res",res.data))
+      .catch(err =>{
+        if(err.response){
+          console.log(err.response.data.error)
+        }
+      })
+    
+
+
+      // .catch(err=>console.log(err))
+      // .then(data =>{
+      //   if(data){
+      //     console.log(data)
+      //   }
+      // })
+    // e.target.reset();
+    // setValues({
+    // name:'',
+    // email:"",
+    // password:''
+    // })
   }
   
   useEffect(()=>{
