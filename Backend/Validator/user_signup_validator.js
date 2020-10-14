@@ -17,7 +17,7 @@ exports.userSignupValidator = (req,res,next)=>{
 		})
 		.withMessage("password should be no less than 6 chars")
 		.matches(/\d/)
-		.withMessage("must have number");
+		.withMessage("password must have number");
 
 
 		const erros = req.validationErrors();

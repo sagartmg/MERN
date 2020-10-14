@@ -3,12 +3,13 @@ const mongoose= require('mongoose');
 require('dotenv').config();
 const router = require('express').Router();
 const cors = require('cors');
+const path =require("path")
+
 
 const user_auth_router = require('./Backend/Routes/user_auth_route');
 const user_router = require('./Backend/Routes/user_route');
 const category_router = require('./Backend/Routes/category_route');
 const product_router = require('./Backend/Routes/product_route');
-
 
 
 
@@ -20,7 +21,7 @@ const expressValidator = require('express-validator');
 
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 {/* 
 const port = process.env.port || 5000;
 	
@@ -28,6 +29,16 @@ const port = process.env.port || 5000;
 
 //db
 //  DATABASE = mongodb://localhost/ecommerce  this will create an ecommerce database in our mongodb
+
+let DATABASE;
+if(process.env.NODE_ENV =="development"){
+	DATABASE = process.env.DATABASE
+}
+else{
+	DATABASE = process.env.MONGO_ATLAS
+}
+
+
 
 mongoose.connect(process.env.DATABASE,{
 	useNewUrlParser: true,
@@ -155,9 +166,16 @@ app.post('/add',(req,res,next)=>{
 
 		}); */}
 
-	
+//no build locally
+app.use(express.static(path.join(__dirname,'build')))
 
-app.listen(port,(res)=>{
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname,'build'))
+})
+
+
+
+app.listen(port,"0.0.0.0",(res)=>{
 	console.log(`server started at port ${port}`);
 
 })
