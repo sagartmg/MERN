@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+const mongoose = require("mongoose")
 
 require('dotenv').config();
   
@@ -13,7 +14,7 @@ const path = require("path")
 const cors = require("cors")
 const morgan = require("morgan")
 const cookieParser = require('cookie-parser')
-const expressValidator = require('express-validator');
+// const expressValidator = require('express-validator');
 
 // ok
 
@@ -23,7 +24,7 @@ app.use(morgan("dev"))
 app.use(express.json());
 
 app.use(cookieParser())
-app.use(expressValidator())
+// app.use(expressValidator())
 
 const secondRouter = require("./Routes/second_route");
 const user_auth_router = require('./Backend/Routes/user_auth_route');

@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const {signup,signin,requireSignin} = require('../Controller/user_auth_controller');
-const {userSignupValidator} = require('../Validator/user_signup_validator')
+// const {userSignupValidator} = require('../Validator/user_signup_validator')
+// express validator problem in heroku
 
 
 router.get('/',(req,res)=>{
 	res.json({"ok":"you will get it"})
 })
-router.post('/signup',userSignupValidator,signup)
+router.post('/signup',signup)
 
 router.post("/signin",signin)
 
