@@ -3,15 +3,8 @@ const mongoose= require('mongoose');
 require('dotenv').config();
 const router = require('express').Router();
 const cors = require('cors');
-const path = require("path");
 
-const user_auth_router = require('./Backend/Routes/user_auth_route');
-const user_router = require('./Backend/Routes/user_route');
-const category_router = require('./Backend/Routes/category_route');
-const product_router = require('./Backend/Routes/product_route');
-
-
-
+const user_router = require('./Routes/user_route');
 
 const morgan = require('morgan');
 const bodyParser = require('body-parser')
@@ -21,7 +14,7 @@ const expressValidator = require('express-validator');
 
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = 5000;
 {/* 
 const port = process.env.port || 5000;
 	
@@ -29,15 +22,6 @@ const port = process.env.port || 5000;
 
 //db
 //  DATABASE = mongodb://localhost/ecommerce  this will create an ecommerce database in our mongodb
-let DATABASE
-if(process.env.NODE_ENV==="development"){
-	DATABASE = process.env.DATABASE;
-
-}
-else{
-	DATABASE = process.env.MONGO_ATLAS
-}
-
 
 mongoose.connect(process.env.DATABASE,{
 	useNewUrlParser: true,
@@ -71,34 +55,7 @@ app.use(expressValidator())
 
 
 //routes middleware
-app.use('/users',user_auth_router);
-app.use("/users",user_router);
-app.use("/category",category_router)
-app.use("/product",product_router)
-
-
-const User = require("./Backend/Model/user_model")
-
-app.use("/update",(req,res)=>{
-	console.log(req.body._id)
-	 User.updateOne({_id:req.body._id},{role:1},(err,user)=>{
-		if(err || !user){
-			return res.status(400).json({
-				err
-			})
-		}
-		res.json({
-			user
-		})
-	})
-	// User.find({},(err,user)=>{
-	// 	res.json({
-	// 		user
-	// 	})
-	// })
-
-
-})
+app.use('/users',user_router);
 
 
 
@@ -164,19 +121,10 @@ app.post('/add',(req,res,next)=>{
 			 	.catch((err)=>res.status(400).json("error happended"+err));
 
 		}); */}
-app.use("/path",(req,res)=>{
-  res.end(`path resolve is response from server at  ${path.resolve(__dirname, "dirname")}`)
-})
 
-//no build locally
-app.use(express.static(path.join(__dirname,'build')))
-
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname,'build'))
-})
 	
 
-app.listen(port,"0.0.0.0",(res)=>{
+app.listen(port,(res)=>{
 	console.log(`server started at port ${port}`);
 
 })
