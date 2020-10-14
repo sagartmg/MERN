@@ -1,9 +1,32 @@
-const express = require('express');
-const mongoose= require('mongoose');
+var express = require('express');
+var app = express();
+
 require('dotenv').config();
-const router = require('express').Router();
-const cors = require('cors');
-const path = require("path");
+  
+// in .env file  
+// REACT_APP_PORT = 4001
+// REACT_APP_PRODUCTION = development
+// PORT = 4001  // in server file 
+
+var PORT = process.env.PORT || 5000
+const path = require("path")
+const cors = require("cors")
+const morgan = require("morgan")
+const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
+const expressValidator = require('express-validator');
+// ok
+
+
+app.use(cors())
+app.use(express.json());
+
+app.use(morgan("dev"))
+app.use(cookieParser())
+app.use(expressValidator())
+
+
+const secondRouter = require("./Routes/second_route");
 
 const user_auth_router = require('./Backend/Routes/user_auth_route');
 const user_router = require('./Backend/Routes/user_route');
@@ -11,24 +34,6 @@ const category_router = require('./Backend/Routes/category_route');
 const product_router = require('./Backend/Routes/product_route');
 
 
-
-
-const morgan = require('morgan');
-const bodyParser = require('body-parser')
-const cookieParser = require('cookie-parser')
-const expressValidator = require('express-validator');
-
-
-
-const app = express();
-const port = process.env.PORT || 5000;
-{/* 
-const port = process.env.port || 5000;
-	
- */}
-
-//db
-//  DATABASE = mongodb://localhost/ecommerce  this will create an ecommerce database in our mongodb
 let DATABASE
 if(process.env.NODE_ENV==="development"){
 	DATABASE = process.env.DATABASE;
@@ -47,126 +52,28 @@ mongoose.connect(process.env.DATABASE,{
 
 }).then(()=>console.log('connected to MONGODB'))
 
-{/* 
- const uri = process.env.MONGO_CODE;
- mongoose.connect(uri,{useNewUrlParser: true, useCreateIndex:true,  useUnifiedTopology: true });
- const connection = mongoose.connection;
- connection.once('open',()=>{
- 	console.log('mongoose connecteion done!!');
- }) 
-*/}
 
 
-//middleware
- app.use(cors()) 
-app.use(express.json());
-app.use(morgan('dev'))  // 'dev' flag..what is this??
-app.use(cookieParser())
-app.use(expressValidator())
-
-{/* 
-	app.use(bodyParser.json())  // no needd
- */}
-
-
-
-//routes middleware
-app.use('/users',user_auth_router);
-app.use("/users",user_router);
-app.use("/category",category_router)
-app.use("/product",product_router)
-
-
-const User = require("./Backend/Model/user_model")
-
-app.use("/update",(req,res)=>{
-	console.log(req.body._id)
-	 User.updateOne({_id:req.body._id},{role:1},(err,user)=>{
-		if(err || !user){
-			return res.status(400).json({
-				err
-			})
-		}
-		res.json({
-			user
-		})
-	})
-	// User.find({},(err,user)=>{
-	// 	res.json({
-	// 		user
-	// 	})
-	// })
-
-
-})
-
-
-
-		
-{/* 
-
-app.use((req, res, next) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/html');
-    res.end('<html><body><h1>This is an Express Server</h1></body></html>');
-		});
-		 */}
-
-		{/* 
-		app.get('/',(req,res,next)=>{
-			res.end("will send ishes to you !!");
-		}); */}
-
-
-
-
-{/* 
-const Schema  = mongoose.Schema;
-
-const answer_schema = new Schema({
-	answer:{
-		type:String,
-
-	},
-},{timestamps:true}); */}
-
-
-{/* 
-
-const userSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    minlength: 3
-  },
-}, {
-  timestamps: true,
-});
- */}
-
-{/* 
-const Answer = mongoose.model('Answer',answer_schema);
- */}
-{/* 
-			res.end("you have passed"+req.body.name+ "with description"+req.body.description);
- */}
-{/* 
-app.post('/add',(req,res,next)=>{
- 
-				const answer = req.body.answer;
-			const newAns = Answer({answer});
-			 newAns.save()
-			 	.then(()=>{res.json("answer added to atlas");
-			 				res.end("sucess to atlas")
-			 					})
-			 	.catch((err)=>res.status(400).json("error happended"+err));
-
-		}); */}
 app.use("/path",(req,res)=>{
-  res.end(`path resolve is response from server at  ${path.resolve(__dirname, "dirname")}`)
+  res.end(`path resolve is response from server ${path.resolve(__dirname, '../build')}`)
 })
+
+
+
+app.use("/first",(req,res)=>{
+	res.end("first-backend-connected ")
+})
+
+app.use("/fuck",(req,res)=>{
+	res.end("fucking-backend-connected ")
+})
+
+
+
+app.use("/second",secondRouter);
+
+
+
 
 //no build locally
 app.use(express.static(path.join(__dirname,'build')))
@@ -174,9 +81,11 @@ app.use(express.static(path.join(__dirname,'build')))
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname,'build'))
 })
-	
 
-app.listen(port,"0.0.0.0",(res)=>{
-	console.log(`server started at port ${port}`);
 
-})
+
+
+
+app.listen(PORT,'0.0.0.0',()=>{
+	console.log("server running at prot ",PORT)
+});
