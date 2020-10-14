@@ -63,7 +63,7 @@ else{
 }
 
 
-mongoose.connect(process.env.DATABASE,{
+mongoose.connect(DATABASE,{
 	useNewUrlParser: true,
     useCreateIndex:true,
    useUnifiedTopology: true
